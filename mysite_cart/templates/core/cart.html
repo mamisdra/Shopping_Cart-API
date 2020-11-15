@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}My cart{% endblock %}
+{% block header %}
+<nav>
+    <ul>
+        <a class=cart href="{% url 'products' %}"><i class="fas fa-desktop"></i></a>
+        <li><a href="{% url 'signin' %}">Sign in</a></li>
+        <li><a href="{% url 'signup' %}">Sign up</a></li>
+        <li><a href="{% url 'logout' %}">Disconect</a></li>
+    </ul>
+</nav>
+
+{% endblock %}
+
+{% block content %}
+    <h2> {{ user.username.capitalize }}'s Cart</h2>
+    <h3>Your order :</h3>
+    <div class = list_product>
+        <ul>
+            {% for entry in list_of_entries %}
+            <li>
+                <h4>{{ entry.product.name }}</h4>
+                <img src="{{ entry.product.image.url }}" width="75px" height="75px">
+                <p>Price : {{ entry.product.price }}€</p>
+                <p>Quantity : {{ entry.quantity }}</p>
+                <a href="{% url 'add_to_cart' entry.product.id %}">Add one</a>
+                <a href="{% url 'remove_from_cart' entry.product.id %}">Remove one</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <h3>Total : {{ total }}€</h3>
+{% endblock %}
